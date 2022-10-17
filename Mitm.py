@@ -4,9 +4,9 @@ import os
 import time
 
 try:
-    interface = raw_input("[*] Enter Desired Interface: ")
-    victimIP = raw_input("[*] Enter Victim IP: ")
-    gatewayIP = raw_input("[*] Enter Gateway IP: ")
+    interface = input("[*] Enter Desired Interface: ")
+    victimIP = input("[*] Enter Victim IP: ")
+    gatewayIP = input("[*] Enter Gateway IP: ")
 except KeyboardInterrupt:
     print("\n[*] User Requested Shutdown")
     print("[*] Exiting...")
