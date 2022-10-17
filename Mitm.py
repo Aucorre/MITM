@@ -56,3 +56,5 @@ def mitm():
         except KeyboardInterrupt:
             reARP()
             break
+
+mitm()
