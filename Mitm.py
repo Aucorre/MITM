@@ -13,16 +13,6 @@ except KeyboardInterrupt:
     sys.exit(1)
 print("[*] Enabling IP Forwarding...\n")
 
-def _enable_linux_iproute():
-
-    file_path = "/proc/sys/net/ipv4/ip_forward"
-    with open(file_path) as f:
-        if f.read() == 1:
-            # already enabled
-            return
-    with open(file_path, "w") as f:
-        print(1, file=f)
-
 def get_mac(IP):
     conf.verb = 0
     try:
