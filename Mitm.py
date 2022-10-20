@@ -23,15 +23,7 @@ enable_ipforwarding()
 print("[*] Enabling IP Forwarding...\n")
 
 def get_mac(IP):
-    arp_request = ARP(pdst=IP)
-    # Create ether packet object. dst - broadcast mac address. 
-    broadcast = Ether(dst="ff:ff:ff:ff:ff:ff")
-    # Combine two packets in two one
-    arp_request_broadcast = broadcast/arp_request
-    # Get list with answered hosts
-    answered_list = srp(arp_request_broadcast, timeout=1,verbose=False)[0]
-    # Return host mac address
-    return answered_list[0][1].hwsrc
+     return getmacbyip(IP)
     
 
 def reARP(): 
