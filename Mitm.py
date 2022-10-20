@@ -23,7 +23,7 @@ enable_ipforwarding()
 print("[*] Enabling IP Forwarding...\n")
 
 def get_mac(IP):
-    arp_request = send(ARP(pdst=IP))
+    arp_request = ARP(pdst=IP)
     # Create ether packet object. dst - broadcast mac address. 
     broadcast = Ether(dst="ff:ff:ff:ff:ff:ff")
     # Combine two packets in two one
