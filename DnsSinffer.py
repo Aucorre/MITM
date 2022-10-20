@@ -4,8 +4,13 @@ import time
 import datetime
 import sys
 
-interface = input("[*] Enter Desired Interface: ")
-filter_bpf = 'udp and port 53'
+try :
+    interface = input("[*] Enter Desired Interface: ")
+    filter_bpf = 'udp and port 53'
+except KeyboardInterrupt:
+    print("\n[*] User Requested Shutdown")
+    print("[*] Exiting...")
+    sys.exit(1)
 
 
 def dns_reply(pkt):
@@ -25,7 +30,7 @@ def sniff_DNS(pkt):
                print(str(pkt[DNS].qd.qname))
                if "google.com" in str(pkt[DNS].qd.qname):
                 dns_reply(pkt)
-           # 
+           
         elif DNSRR in pkt and pkt.sport == 53:
             print ('[**] Detected DNS RR Message at: ' + pkt_time)
             if pkt[DNS].qd.qname:
@@ -33,7 +38,7 @@ def sniff_DNS(pkt):
         # responses
 
  # 
-    except:
+    except KeyboardInterrupt():
         pass
 # ------ START SNIFFER 
 

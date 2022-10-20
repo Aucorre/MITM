@@ -11,6 +11,15 @@ except KeyboardInterrupt:
     print("\n[*] User Requested Shutdown")
     print("[*] Exiting...")
     sys.exit(1)
+def enable_ipforwarding():
+    path = "/proc/sys/net/ipv4/ip_forward"
+    with open(path) as f:
+        if f.read() == 1:
+            # already enabled
+            return
+    with open(path, "w") as f:
+        print(1, file=f)
+enable_ipforwarding()
 print("[*] Enabling IP Forwarding...\n")
 
 def get_mac(IP):
