@@ -23,6 +23,7 @@ enable_ipforwarding()
 print("[*] Enabling IP Forwarding...\n")
 
 def get_mac(IP):
+     from scapy.layers.l2 import getmacbyip
      return getmacbyip(IP)
     
 
