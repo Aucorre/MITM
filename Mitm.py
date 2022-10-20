@@ -23,14 +23,15 @@ enable_ipforwarding()
 print("[*] Enabling IP Forwarding...\n")
 
 def get_mac(IP):
-    conf.verb = 0
-    try:
-        ans, unans = srp(Ether(dst="ff:ff:ff:ff:ff:ff")/ARP(pdst=IP), timeout=2, iface=interface, inter=0.1)
-    except Exception:
-        print("[!] Error Sending/Receiving Packet")
-        sys.exit(1)
-    for snd,rcv in ans:
-        return rcv.sprintf(r"%Ether.src%")
+    arp_request = scapy.ARP(pdst=IP)
+    # Create ether packet object. dst - broadcast mac address. 
+    broadcast = scapy.Ether(dst="ff:ff:ff:ff:ff:ff")
+    # Combine two packets in two one
+    arp_request_broadcast = broadcast/arp_request
+    # Get list with answered hosts
+    answered_list = scapy.srp(arp_request_broadcast, timeout=1,verbose=False)[0]
+    # Return host mac address
+    return answered_list[0][1].hwsrc
     
 
 def reARP(): 
