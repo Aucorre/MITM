@@ -23,14 +23,8 @@ enable_ipforwarding()
 print("[*] Enabling IP Forwarding...\n")
 
 def get_mac(IP):
-    conf.verb = 0
-    try:
-        ans, unans = srp(Ether(dst="ff:ff:ff:ff:ff:ff")/ARP(pdst=IP), timeout=2, iface=interface, inter=0.1)
-    except Exception:
-        print("[!] Error Sending/Receiving Packet")
-        sys.exit(1)
-    for snd,rcv in ans:
-        return rcv.sprintf(r"%Ether.src%")
+    mac = getmacbyip(IP)
+    return mac
     
 
 def reARP(): 
