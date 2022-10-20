@@ -1,4 +1,4 @@
-from scapy import *
+from scapy.all import *
 import sys
 import os
 import time
