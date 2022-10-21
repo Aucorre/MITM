@@ -64,7 +64,6 @@ def reARP():
     for i in range(0, len(victimMAC)):
         send(ARP(op=2, pdst=victimIP[i], psrc=gatewayIP, hwdst="ff:ff:ff:ff:ff:ff", hwsrc=gatewayMAC), count=7)
         send(ARP(op=2, pdst=gatewayIP, psrc=victimIP[i], hwdst="ff:ff:ff:ff:ff:ff", hwsrc=victimMAC[i]), count=7)
-    print("[*] Disabling IP Forwarding...")
     print("[*] Shutting Down...")
     sys.exit(1)
 
