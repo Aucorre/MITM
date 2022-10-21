@@ -39,6 +39,7 @@ print("[*] Enabling IP Forwarding...\n")
 
 print(victimIP)
 if victimIP == "network":
+    victimIP = scan(get_if_addr(conf.iface)+"/24")
     flag = True
 
 def get_gwmac(IP):
