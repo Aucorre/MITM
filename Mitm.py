@@ -14,7 +14,7 @@ def scan(ip):
     result = []
 
     for sent, received in ans:
-        result.append(received.hwsrc)
+        result.append(received.psrc)
 
     return result
 
