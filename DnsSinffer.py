@@ -35,7 +35,7 @@ def sniff_DNS(pkt):
            print('[**] Detected DNS QR Message at: ' + pkt_time)
            if pkt[DNS].qd.qname:
                print(str(pkt[DNS].qd.qname))
-               if "google.com" in str(pkt[DNS].qd.qname):
+               if "scapy.net" in str(pkt[DNS].qd.qname):
                 dns_reply(pkt)
            
         elif DNSRR in pkt and pkt.sport == 53:
