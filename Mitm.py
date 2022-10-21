@@ -53,7 +53,7 @@ def get_mac(IP):
         for i in range(0, len(victimIP)):
             result.append(getmacbyip(victimIP[i]))
     else:
-        result.append(getmacbyip(IP))
+        result.append(getmacbyip(IP[0]))
     return result
     
 
