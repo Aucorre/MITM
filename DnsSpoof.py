@@ -38,12 +38,8 @@ def sniff_DNS(pkt):
             print ('[**] Detected DNS RR Message at: ' + pkt_time)
             if pkt[DNS].qd.qname:
                print(str(pkt[DNS].qd.qname))
-        # responses
 
- # 
     except KeyboardInterrupt():
         pass
-# ------ START SNIFFER 
 
 sniff(iface=interface, filter=filter_bpf, store=0,  prn=sniff_DNS)
-

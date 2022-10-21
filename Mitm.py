@@ -31,7 +31,6 @@ def enable_ipforwarding():
     path = "/proc/sys/net/ipv4/ip_forward"
     with open(path) as f:
         if f.read() == 1:
-            # already enabled
             return
     with open(path, "w") as f:
         print(1, file=f)
