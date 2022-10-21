@@ -18,6 +18,7 @@ def scan(ip):
 
     return result
 
+
 try:
     interface = input("[*] Enter Desired Interface: ")
     victimIPi = input("[*] Enter Victim IP: ")

