@@ -37,11 +37,11 @@ def enable_ipforwarding():
 enable_ipforwarding()
 print("[*] Enabling IP Forwarding...\n")
 
-print(victimIP)
+
 if victimIP == "network":
     victimIP = scan(get_if_addr(conf.iface)+"/24")
     flag = True
-
+print(victimIP)
 def get_gwmac(IP):
     return getmacbyip(IP)
 def get_mac(IP):
