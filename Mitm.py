@@ -6,6 +6,7 @@ import argparse
 
 
 flag = False
+victimIP=[]
 def scan(ip):
 
     request = Ether(dst="ff:ff:ff:ff:ff:ff") / ARP(pdst=ip)
@@ -20,7 +21,7 @@ def scan(ip):
 
 try:
     interface = input("[*] Enter Desired Interface: ")
-    victimIP = input("[*] Enter Victim IP: ")
+    victimIPi = input("[*] Enter Victim IP: ")
     gatewayIP = input("[*] Enter Gateway IP: ")
 except KeyboardInterrupt:
     print("\n[*] User Requested Shutdown")
@@ -38,7 +39,7 @@ enable_ipforwarding()
 print("[*] Enabling IP Forwarding...\n")
 
 
-if victimIP == "network":
+if victimIPi == "network":
     victimIP = scan(get_if_addr(conf.iface)+"/24")
     flag = True
 print(victimIP)

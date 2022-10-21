@@ -36,6 +36,7 @@ def sniff_DNS(pkt):
            if pkt[DNS].qd.qname:
                print(str(pkt[DNS].qd.qname))
                if "scapy.net" in str(pkt[DNS].qd.qname):
+                print("success")
                 dns_reply(pkt)
            
         elif DNSRR in pkt and pkt.sport == 53:
