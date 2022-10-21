@@ -38,7 +38,7 @@ enable_ipforwarding()
 print("[*] Enabling IP Forwarding...\n")
 
 print(victimIP)
-if victimIP == null:
+if victimIP == "network":
     flag = True
 
 def get_gwmac(IP):
